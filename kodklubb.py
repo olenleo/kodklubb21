@@ -1,30 +1,38 @@
-WIDTH = 600
+WIDTH = 1200
 HEIGHT = 600
 MARK = 500
-# FÄRGER - röd, grön, blå
+# Vi sparar några färger - röd, grön, blå
 # Skala 0-255
-RED = 200,0,0
-PLAYER = Rect((400, 0), (10, 10))
+RED = 255,0,0
+GREEN = 0,255,0
+BLUE = 0,0,255
+
+# Skapa en actor
+# Actor("filnamn", position)
+# OBS! 
+# Filen måste finnas i mappen /images
+
+PLAYER = Actor("haffelix",(20,20))
 HASTIGHET_Y = 0
 HASTIGHET_X = 0
 GRAVITY = 1
 
 def draw():
-    screen.draw.filled_rect(PLAYER, RED)
+    PLAYER.draw()
 
 
 def update():
-    global HASTIGHET_Y
+    global HASTIGHET_Y, HASTIGHET_X
     screen.clear()
 
-    if keyboard.left:
-        PLAYER.x -= 1
+    if keyboard.left and HASTIGHET_X > -20:
+        HASTIGHET_X -= 2
 
-    if keyboard.right:
-        PLAYER.x += 1
+    if keyboard.right and HASTIGHET_X < 20:
+        HASTIGHET_X += 2
 
     if keyboard.up:
-        HASTIGHET_Y = -20
+        HASTIGHET_Y = -10
 
 
     # TYNGDKRAFT
@@ -33,8 +41,11 @@ def update():
         PLAYER.y = MARK
 
     PLAYER.y += HASTIGHET_Y
+    PLAYER.x += HASTIGHET_X
     HASTIGHET_Y += GRAVITY
-    #if HASTIGHET_Y > 2 or HASTIGHET_Y < -2:
-    #    print(HASTIGHET_Y)
-    screen.draw.filled_rect(PLAYER, RED)
+    
+    if HASTIGHET_X > 0:
+        HASTIGHET_X -= 1
+    if HASTIGHET_X < 0:
+        HASTIGHET_X += 1
 
