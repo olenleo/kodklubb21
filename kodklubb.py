@@ -9,14 +9,10 @@ BLUE = 0,0,255
 
 # Skapa en actor
 # Actor("filnamn", position)
-<<<<<<< HEAD
 # OBS!
-=======
-# OBS! 
->>>>>>> 11320f63187eaa299ffd189ce6ccab52745ad59b
 # Filen måste finnas i mappen /images
 
-PLAYER = Actor("haffelix",(20,20))
+PLAYER = Actor("haffelix2",(20,20))
 HASTIGHET_Y = 0
 HASTIGHET_X = 0
 GRAVITY = 1
@@ -47,14 +43,7 @@ def update():
     PLAYER.y += HASTIGHET_Y
     PLAYER.x += HASTIGHET_X
     HASTIGHET_Y += GRAVITY
-<<<<<<< HEAD
-=======
-    
-    if HASTIGHET_X > 0:
-        HASTIGHET_X -= 1
-    if HASTIGHET_X < 0:
-        HASTIGHET_X += 1
->>>>>>> 11320f63187eaa299ffd189ce6ccab52745ad59b
+
 
     if HASTIGHET_X > 0:
         HASTIGHET_X -= 1
