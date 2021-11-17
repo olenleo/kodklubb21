@@ -94,7 +94,7 @@ def update():
 
     ###############################******
     # TYNGDKRAFT
-    if PLAYER.y >= mark:
+    if PLAYER.y > mark:
         hastighetY = 0
         PLAYER.y = mark
 
