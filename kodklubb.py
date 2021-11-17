@@ -18,10 +18,11 @@ green = 0, 255, 0
 blue = 0, 0, 255
 #-----------------------------------#
 
-##############################
+###################################
 # OBS - dessa är *globala* variabler!
 # global hastighetX
 # Förlåt... men sånt är livet!
+
 hastighetY = 0
 hastighetX = 0
 gravity = 1
@@ -64,9 +65,9 @@ def update():
     screen.clear()
 
     if blockIsReadyToDrop:
-        # Nästa block är inte färdigt ännu!
-        # Metod för att fälla block?
-        clock.schedule(metod, 1) # Vilken metod förbereder nästa block?
+        # <--- ställ in blockIsReadyToDrop' - True eller false?
+        # <--- skriv in metoden som fäller ett block!
+        clock.schedule(x, 1) # Ersätt 'x' med rätt metodSS
 
     for block in activeBlocks:
         if block.y < mark:
