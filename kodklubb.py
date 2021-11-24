@@ -1,34 +1,38 @@
 #####################################
-# Till exempel random behövs inte i så många program, därför är det inte alltid med.
+# Random behövs inte i så många program, därför är det inte alltid med.
 # Med 'import' bjuder vi med andra bibliotek.
 import random
 
+# random-biblioteket behövs för slumpmåssiga tal!
+# användning:
+# slumpmassig_siffra = random.randint(0,10)
 ###################################
-# Viktiga variabler
+# Nyttiga variabler
 WIDTH = 600
 HEIGHT = 600
-
+mark = 600
 #-----------------------------------#
 
 ###################################
-# Vi sparar några färger - röd, grön, blå
+#Vi sparar några färger - röd, grön, blå
 # Skala 0-255
 red = 255, 0, 0
 green = 0, 255, 0
 blue = 0, 0, 255
 #-----------------------------------#
 
-###################################
-# OBS - dessa är *globala* variabler!
-# global hastighetX
-# Förlåt... men sånt är livet!
+PLAYER = Actor("haffelix2", (300, 10), anchor = ('center', 'bottom'))
 
+##############################
+# OBS - globala variabler!
+# Förlåt... men sånt är det med Python :S
 hastighetY = 0
 hastighetX = 0
 gravity = 1
 activeBlocks = []
 finishedBlocks = []
 blockIsReadyToDrop = True
+
 #-----------------------------------#
 
 ####################################
@@ -39,11 +43,10 @@ for block in range(3):
 for block in range(3):
     nyttBlock = Actor("block_red_2x2", (block * 30 + 80, 250), anchor = ('center','bottom'))
     activeBlocks.append(nyttBlock)
-#-----------------------------------#
+#-----------------------------------#a
 
 
-####################################
-# draw()-loopen körs varje gång pygame ritar något
+
 
 def draw():
     screen.blit("bg4", (0, 0))
@@ -51,23 +54,28 @@ def draw():
     for block in activeBlocks:
         block.draw()
     for block in finishedBlocks:
-        # vad händer här?
-        print("Vad händer här?")
-#-----------------------------------#
+        block.image = 'block_blue_2x2'
+        block.draw()
 
-####################################
-# update()-loopen körs hela tiden :)
-# kom ihåg indentationen - den visar var funktionen slutar!
 
 def update():
     global hastighetX, hastighetY, activeBlocks, finishedBlocks, blockIsReadyToDrop, readyToJump
-#### <--- indentation
+
     screen.clear()
+    for block in finishedBlocks:
+        if block.colliderect(PLAYER):
+            PLAYER.y = block.top
+            hastighetY = 1
+
+    for block in activeBlocks:
+        if block.collidelist(finishedBlocks) > -1:
+            finishedBlocks.append(block)
+            activeBlocks.remove(block)
 
     if blockIsReadyToDrop:
-        # <--- ställ in blockIsReadyToDrop' - True eller false?
-        # <--- skriv in metoden som fäller ett block!
-        clock.schedule(x, 1) # Ersätt 'x' med rätt metodSS
+        blockIsReadyToDrop = False
+        dropABlock()
+        clock.schedule(setBlockReadyToDrop,1)
 
     for block in activeBlocks:
         if block.y < mark:
@@ -80,7 +88,6 @@ def update():
     ####################################
     # Spelarens rörelse
 
-#### vi är ännu i update()...
     if keyboard.left and hastighetX > -20:
         hastighetX -= 2
 
@@ -88,7 +95,7 @@ def update():
         hastighetX += 2
 
     if keyboard.up and hastighetY == 1:
-        hastighetY -= 15
+        hastighetY -= 10
 
     #-----------------------------------#
 
@@ -102,25 +109,24 @@ def update():
     PLAYER.y += hastighetY
     PLAYER.x += hastighetX
     hastighetY += gravity
-#### vi är ännu i update()...
+
     if hastighetX > 0:
         hastighetX -= 1
     if hastighetX < 0:
         hastighetX += 1
 
 
-# men HÄR slutar update()
-#-----------------------------------#
 
+    #-----------------------------------#
 
 ####################################
 # Här fäller vi block!
 def setBlockReadyToDrop():
     global blockIsReadyToDrop
-    # True eller False?
+    blockIsReadyToDrop = True
 
 def dropABlock():
-    x = 10 # gör x till en slumpmässig siffra!
+    x = random.randint(1, 20) * 30
     nyttBlock = Actor("block_red_2x2", (x, -10), anchor = ('center','bottom'))
-    # nu har vi ett nytt block... hur sparar vi den i minnet?
+    activeBlocks.append(nyttBlock)
 #-----------------------------------#
